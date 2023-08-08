@@ -6,6 +6,7 @@ import {
   LogginResponse,
   User,
   UserFormLoggin,
+  UserFormRegister,
 } from "../../../types";
 import axios from "axios";
 
@@ -14,28 +15,41 @@ const initialState = {
   email: "",
   name: "",
   isAdmin: false,
-  loginStatus: "",
-  loginError: "",
+  userStatus: "",
+  userError: "",
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    loadUser: (state) => {
+      const token = localStorage.getItem("userToken") || "";
+      const key = process.env.NEXT_PUBLIC_JWTSecretKey as string;
+
+      const { email, name, isAdmin } = jwt.verify(token, key) as JwtPayload;
+
+      return {
+        ...state,
+        email,
+        name,
+      };
+    },
+  },
   extraReducers: (builder) => {
+    /* login */
     builder.addCase(loginUser.pending, (state, action) => {
-      console.log("pending");
-      return { ...state, loginStatus: "pending" };
+      return { ...state, userStatus: "pending" };
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {
       if (action.payload) {
         return {
-          token: localStorage.getItem("userToken"),
+          ...state,
           email: action.payload.email,
           name: action.payload.name,
           isAdmin: false,
-          loginStatus: "completed",
-          loginError: "",
+          userStatus: "completed",
+          userError: "",
         };
       }
     });
@@ -43,17 +57,42 @@ const userSlice = createSlice({
       console.log("rejected");
       return {
         ...state,
-        loginStatus: "rejected",
-        loginError: "Mail o Contraseña incorrecto",
+        userStatus: "rejected",
+        userError: "Mail o Contraseña incorrecto",
+      };
+    });
+    /* register */
+    builder.addCase(registerUser.pending, (state, action) => {
+      return { ...state, userStatus: "Creating account" };
+    });
+    builder.addCase(registerUser.fulfilled, (state, action) => {
+      if (action.payload) {
+        return {
+          ...state,
+          email: action.payload.email,
+          name: action.payload.name,
+          isAdmin: false,
+          userStatus: "completed",
+          userError: "",
+        };
+      }
+    });
+    builder.addCase(registerUser.rejected, (state, action) => {
+      console.log("rejected");
+      return {
+        ...state,
+        userStatus: "rejected",
+        userError: "Missing data",
       };
     });
   },
 });
 
+export const { loadUser } = userSlice.actions;
 export default userSlice.reducer;
 
 export const loginUser = createAsyncThunk(
-  "users/loggin",
+  "users/login",
   // if you type your function argument here
   async (user: UserFormLoggin, { rejectWithValue }) => {
     try {
@@ -62,8 +101,29 @@ export const loginUser = createAsyncThunk(
         password: user.password,
       });
       const token = res.data;
-      const key = process.env.JWTSecretKey as string;
-      console.log("key: ", key, "procces: ", process.env);
+      const key = process.env.NEXT_PUBLIC_JWTSecretKey as string;
+      const { email, name, isAdmin } = (await jwt.verify(
+        token,
+        key
+      )) as JwtPayload;
+
+      localStorage.setItem("userToken", token);
+      return { email, name, isAdmin };
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const registerUser = createAsyncThunk(
+  "users/register",
+  async (user: UserFormRegister, { rejectWithValue }) => {
+    try {
+      const res = await axios.post("http://localhost:5000/auth/register", user);
+      const token = res.data;
+      const key = process.env.NEXT_PUBLIC_JWTSecretKey as string;
+
       const { email, name, isAdmin } = (await jwt.verify(
         token,
         key

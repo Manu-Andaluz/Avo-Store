@@ -12,19 +12,44 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { registerUser } from '@/redux/features/userSlice';
+import { useRouter } from 'next/navigation';
 // TODO remove, this demo shouldn't need to reset the theme.
+
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const {userStatus} = useAppSelector(state => state.userReducer)
+  const dispatch = useAppDispatch()
+  const [form, setForm] = useState({
+    email:"",
+    firstName:"",
+    lastName: "",
+    password:"",
+    fullName: ""
+  })
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({...form, [event.target.name]: event.target.value})
+  }
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    form.fullName = form.firstName + ' ' + form.lastName;
+    dispatch(registerUser({email:form.email ,name: form.fullName, password: form.password}))
   };
+
+  const { push } = useRouter();
+
+  useEffect(() => {
+
+    if(userStatus === "completed"){
+      push('/')
+    }
+
+  }, [userStatus])
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -55,6 +80,8 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={form.firstName}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -65,6 +92,8 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  value={form.lastName}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -75,6 +104,8 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={form.email}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -86,9 +117,14 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={form.password}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
+              {userStatus === "rejected" && (
+              <p style={{color:"red"}}>User or Password incorrect</p>
+            )}
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
@@ -101,11 +137,11 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              {userStatus === "pending" ? "Sign Up ... " : "Sign Up"}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

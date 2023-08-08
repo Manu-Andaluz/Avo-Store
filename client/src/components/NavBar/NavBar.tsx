@@ -12,6 +12,14 @@ import Link from "next/link";
 
 function NavBar() {
 
+  const [isUser, setIsUser] = React.useState(false)
+
+  React.useEffect(() => {
+    if(typeof window !== "undefined" && localStorage.getItem('userToken')){
+      setIsUser(true)
+    }
+  },[isUser])
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" className="navbar" style={{padding: "10px 0", backgroundColor:"white", color:"black"}}>
@@ -35,7 +43,7 @@ function NavBar() {
             flexWrap="wrap"
           >
             {
-              localStorage.getItem('userToken') ? (<Button color="inherit">Cuenta</Button>) : (<Button color="inherit"><Link style={{textDecoration:"none", color:"black"}} href={'/loggin'}>Login</Link></Button>)
+              isUser ? (<Button color="inherit"><Link href={'/account'} style={{textDecoration:"none",color:"black"}}>Account</Link></Button>) : (<Button color="inherit"><Link style={{textDecoration:"none", color:"black"}} href={'/login'}>Login</Link></Button>)
               }
             <Cart />
           </Stack>

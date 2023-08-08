@@ -12,8 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { loginUser } from '@/redux/features/userSlice';
 import { useRouter } from 'next/navigation';
@@ -37,14 +36,14 @@ export default function SignIn() {
     dispatch(loginUser({email: form.email, password: form.password}))
   };
 
-  const {loginStatus} = useAppSelector(state => state.userReducer)
+  const {userStatus} = useAppSelector(state => state.userReducer)
   const { push } = useRouter();
 
   useEffect(() => {
-    if(loginStatus === "completed"){
+    if(userStatus === "completed"){
       push('/')
     }
-  },[loginStatus])
+  },[userStatus])
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -89,7 +88,7 @@ export default function SignIn() {
               value={form.password}
               onChange={(e: React.ChangeEvent<HTMLInputElement>): void => handleChange(e)}
             />
-            {loginStatus === "rejected" && (
+            {userStatus === "rejected" && (
               <p style={{color:"red"}}>User or Password incorrect</p>
             )}
             <FormControlLabel
@@ -102,7 +101,7 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              {loginStatus === "pending" ? "Loggin ... " : "Sign In"}
+              {userStatus === "pending" ? "Loggin ... " : "Sign In"}
             </Button>
             <Grid container>
               <Grid item xs>
@@ -111,7 +110,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

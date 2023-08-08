@@ -39,6 +39,12 @@ type UserFormLoggin = {
   password: string;
 };
 
+type UserFormRegister = {
+  email: string;
+  name: string;
+  password: string;
+};
+
 type LogginResponse = {
   token: string;
 };
