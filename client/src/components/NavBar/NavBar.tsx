@@ -34,7 +34,9 @@ function NavBar() {
             useFlexGap
             flexWrap="wrap"
           >
-            <Button color="inherit">Login</Button>
+            {
+              localStorage.getItem('userToken') ? (<Button color="inherit">Cuenta</Button>) : (<Button color="inherit"><Link style={{textDecoration:"none", color:"black"}} href={'/loggin'}>Login</Link></Button>)
+              }
             <Cart />
           </Stack>
         </Toolbar>

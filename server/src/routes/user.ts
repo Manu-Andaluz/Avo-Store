@@ -3,26 +3,8 @@ import { Request, Response } from "express";
 export const userRouter = express();
 import { pool } from "./index";
 import bcrypt from "bcrypt";
-
-type User = {
-  email: string;
-  password: string;
-  name: string;
-  isAdmin: Boolean;
-  googleId: string | null;
-};
-
-type UserResponse = {
-  command: string;
-  rowCount: number;
-  oid: null;
-  rows: User[];
-  fields: [];
-  _parsers: [];
-  _types: {};
-  RowCtor: null;
-  rowAsArray: boolean;
-};
+import { User, UserError, UserResponse } from "../../types";
+import { generatheAuthToken } from "../utils/jwt/generateAuthToken";
 
 userRouter.get("/", (req: Request, res: Response) => {
   res.send("Hola");
@@ -33,6 +15,10 @@ userRouter.post("/register", async (req: Request, res: Response) => {
     const { email, name } = req.body;
     let { password } = req.body;
 
+    if (!email || !name || !password) {
+      return res.status(500).send("Missing data");
+    }
+
     password = await bcrypt.hash(password, 8);
 
     pool.query(
@@ -41,11 +27,13 @@ userRouter.post("/register", async (req: Request, res: Response) => {
         '${email}','${password}','${name}'
       );
       `,
-      (error: object, response: any) => {
+      (error: UserError, response: UserResponse) => {
         if (error) {
-          res.status(404).send(error);
+          return res
+            .status(404)
+            .send({ error: error, errorMessage: error.detail });
         }
-        res.send(response);
+        return res.status(201).send("User created");
       }
     );
   } catch (error) {
@@ -54,22 +42,28 @@ userRouter.post("/register", async (req: Request, res: Response) => {
   }
 });
 
-userRouter.get("/loggin", async (req: Request, res: Response) => {
+userRouter.post("/loggin", async (req: Request, res: Response) => {
   try {
-    const { id, password } = req.body;
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      console.log(email, password);
+      return res.status(500).send("Missing data");
+    }
 
     pool.query(
-      `SELECT * FROM users WHERE email = '${id}' `,
-      async (error: object, response: UserResponse) => {
+      `SELECT * FROM users WHERE email = '${email}' `,
+      async (error: UserError, response: UserResponse) => {
         if (error) {
-          res.status(404).send(error);
+          return res.status(404).send(error);
         }
         const validatePassword = await bcrypt.compare(
           password,
           response.rows[0].password
         );
         if (validatePassword) {
-          res.status(200).send(response.rows[0]);
+          const token = await generatheAuthToken(response.rows[0]);
+          res.status(200).send(token);
         } else {
           res.send("Incorrect user or password");
         }

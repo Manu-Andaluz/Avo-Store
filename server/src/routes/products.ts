@@ -2,30 +2,7 @@ import express from "express";
 import { Request, Response } from "express";
 export const productRouter = express();
 import { pool } from "./index";
-
-type Url = string;
-
-type TProduct = {
-  id: string | number;
-  name: string;
-  price: number;
-  image: Url;
-  desciption: string;
-  stock: number;
-  quantity: number;
-};
-
-type ProductResponse = {
-  command: string;
-  rowCount: number;
-  oid: null;
-  rows: TProduct[];
-  fields: [];
-  _parsers: [];
-  _types: {};
-  RowCtor: null;
-  rowAsArray: boolean;
-};
+import { TProduct, ProductResponse } from "../../types";
 
 productRouter.get("/allProducts", async (req: Request, res: Response) => {
   try {
