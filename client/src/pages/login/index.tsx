@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { loginUser } from '@/redux/features/userSlice';
 import { useRouter } from 'next/navigation';
-
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
@@ -40,13 +40,14 @@ export default function SignIn() {
   const { push } = useRouter();
 
   useEffect(() => {
-    if(userStatus === "completed"){
+    if(userStatus === "isUser"){
       push('/')
     }
   },[userStatus])
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <Link href='/' sx={{position:"absolute",margin:"20px"}}><KeyboardBackspaceIcon sx={{marginTop:"0"}}/></Link>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

@@ -15,7 +15,7 @@ export default function Page({params} : {params: {id: string}}) {
   const fetchProduct = async () => {
     try {
       const { data, status } = await axios.get<TProduct>(
-        `http://localhost:5000/product//productById/${router.query.id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/product//productById/${router.query.id}`
       );
       setProduct([data])
     } catch (error) {

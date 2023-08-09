@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { registerUser } from '@/redux/features/userSlice';
 import { useRouter } from 'next/navigation';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
@@ -53,6 +54,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <Link href='/' sx={{position:"absolute",margin:"20px"}}><KeyboardBackspaceIcon sx={{marginTop:"0"}}/></Link>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

@@ -25,15 +25,34 @@ const userSlice = createSlice({
   reducers: {
     loadUser: (state) => {
       const token = localStorage.getItem("userToken") || "";
-      const key = process.env.NEXT_PUBLIC_JWTSecretKey as string;
+      if (token) {
+        const key = process.env.NEXT_PUBLIC_JWTSecretKey as string;
 
-      const { email, name, isAdmin } = jwt.verify(token, key) as JwtPayload;
+        const { email, name, isAdmin } = jwt.verify(token, key) as JwtPayload;
 
-      return {
-        ...state,
-        email,
-        name,
-      };
+        return {
+          ...state,
+          email,
+          name,
+          userStatus: "isUser",
+        };
+      }
+    },
+    logOutUser: (state) => {
+      const user = localStorage.getItem("userToken") || "";
+
+      if (user) {
+        localStorage.removeItem("userToken");
+        return {
+          ...state,
+          token: "",
+          email: "",
+          name: "",
+          isAdmin: false,
+          userStatus: "",
+          userError: "",
+        };
+      }
     },
   },
   extraReducers: (builder) => {
@@ -48,13 +67,12 @@ const userSlice = createSlice({
           email: action.payload.email,
           name: action.payload.name,
           isAdmin: false,
-          userStatus: "completed",
+          userStatus: "isUser",
           userError: "",
         };
       }
     });
     builder.addCase(loginUser.rejected, (state, action) => {
-      console.log("rejected");
       return {
         ...state,
         userStatus: "rejected",
@@ -72,13 +90,12 @@ const userSlice = createSlice({
           email: action.payload.email,
           name: action.payload.name,
           isAdmin: false,
-          userStatus: "completed",
+          userStatus: "isUser",
           userError: "",
         };
       }
     });
     builder.addCase(registerUser.rejected, (state, action) => {
-      console.log("rejected");
       return {
         ...state,
         userStatus: "rejected",
@@ -88,7 +105,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { loadUser } = userSlice.actions;
+export const { loadUser, logOutUser } = userSlice.actions;
 export default userSlice.reducer;
 
 export const loginUser = createAsyncThunk(
@@ -96,10 +113,13 @@ export const loginUser = createAsyncThunk(
   // if you type your function argument here
   async (user: UserFormLoggin, { rejectWithValue }) => {
     try {
-      const res = await axios.post("http://localhost:5000/auth/loggin", {
-        email: user.email,
-        password: user.password,
-      });
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/loggin`,
+        {
+          email: user.email,
+          password: user.password,
+        }
+      );
       const token = res.data;
       const key = process.env.NEXT_PUBLIC_JWTSecretKey as string;
       const { email, name, isAdmin } = (await jwt.verify(
@@ -120,7 +140,10 @@ export const registerUser = createAsyncThunk(
   "users/register",
   async (user: UserFormRegister, { rejectWithValue }) => {
     try {
-      const res = await axios.post("http://localhost:5000/auth/register", user);
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        user
+      );
       const token = res.data;
       const key = process.env.NEXT_PUBLIC_JWTSecretKey as string;
 

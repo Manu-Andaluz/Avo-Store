@@ -9,16 +9,34 @@ import Avocado from "../SVGIcons/avocado";
 import Stack from "@mui/material/Stack";
 import Cart from "../Cart/Cart";
 import Link from "next/link";
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logOutUser } from "@/redux/features/userSlice";
+import { useRouter } from "next/navigation";
 
 function NavBar() {
-
-  const [isUser, setIsUser] = React.useState(false)
+  const dispatch = useAppDispatch()
+  const {userStatus} = useAppSelector(state => state.userReducer)
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const { push } = useRouter();
 
   React.useEffect(() => {
-    if(typeof window !== "undefined" && localStorage.getItem('userToken')){
-      setIsUser(true)
-    }
-  },[isUser])
+  },[userStatus])
+
+  const handleMenu = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(logOutUser())
+    push('/login')
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -43,7 +61,42 @@ function NavBar() {
             flexWrap="wrap"
           >
             {
-              isUser ? (<Button color="inherit"><Link href={'/account'} style={{textDecoration:"none",color:"black"}}>Account</Link></Button>) : (<Button color="inherit"><Link style={{textDecoration:"none", color:"black"}} href={'/login'}>Login</Link></Button>)
+              userStatus ? 
+              (
+              <Box>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountBoxIcon sx={{fontSize:"2rem"}} />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleLogout}>Log out</MenuItem>
+              </Menu>
+            </Box>
+              
+              ) 
+              
+              : (<Button color="inherit"><Link style={{textDecoration:"none", color:"black"}} href={'/login'}>Login</Link></Button>)
               }
             <Cart />
           </Stack>
