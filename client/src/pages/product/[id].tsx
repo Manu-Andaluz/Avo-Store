@@ -35,7 +35,7 @@ export default function Page({params} : {params: {id: string}}) {
    <div style={{marginTop:"20vh"}}>
      {product[0] ? (
      <ProductDetails id={product[0].id} stock={product[0].stock} name={product[0].name} price={product[0].price} image_url={product[0].image_url} description={product[0].description} quantity={product[0].quantity}/>
-     ) : (<p>El producto que buscas no existe</p>)}
+     ) : (<p>No product find</p>)}
    </div>
    </>
   )

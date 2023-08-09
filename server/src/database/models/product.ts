@@ -7,7 +7,7 @@ export const productModel = (sequelize: any, DataTypes: any) => {
     },
     name: {
       type: DataTypes.STRING,
-      field: "name", 
+      field: "name",
       allowNull: false,
     },
     price: {
@@ -20,7 +20,7 @@ export const productModel = (sequelize: any, DataTypes: any) => {
       field: "description",
       allowNull: false,
     },
-    imageUrl: {
+    image_url: {
       type: DataTypes.STRING,
       field: "image_url",
       allowNull: false,
