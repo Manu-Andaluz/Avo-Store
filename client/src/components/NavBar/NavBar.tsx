@@ -9,21 +9,21 @@ import Avocado from "../SVGIcons/avocado";
 import Stack from "@mui/material/Stack";
 import Cart from "../Cart/Cart";
 import Link from "next/link";
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logOutUser } from "@/redux/features/userSlice";
 import { useRouter } from "next/navigation";
+import { Modal } from "@mui/material";
 
 function NavBar() {
-  const dispatch = useAppDispatch()
-  const {userStatus} = useAppSelector(state => state.userReducer)
+  const dispatch = useAppDispatch();
+  const { userStatus } = useAppSelector((state) => state.userReducer);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { push } = useRouter();
 
-  React.useEffect(() => {
-  },[userStatus])
+  React.useEffect(() => {}, [userStatus]);
 
   const handleMenu = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -34,13 +34,21 @@ function NavBar() {
   };
 
   const handleLogout = () => {
-    dispatch(logOutUser())
-    push('/login')
-  }
+    dispatch(logOutUser());
+    push("/login");
+  };
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpenModal = () => setOpen(true);
+  const handleCloseModal = () => setOpen(false);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" className="navbar" style={{padding: "10px 0", backgroundColor:"white", color:"black"}}>
+      <AppBar
+        position="fixed"
+        className="navbar"
+        style={{ padding: "10px 0", backgroundColor: "white", color: "black" }}
+      >
         <Toolbar>
           <IconButton
             size="large"
@@ -49,7 +57,10 @@ function NavBar() {
             aria-label="menu"
             sx={{ mr: 1 }}
           >
-           <Link href={'/'}> <Avocado /></Link>
+            <Link href={"/"}>
+              {" "}
+              <Avocado />
+            </Link>
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Avo Store
@@ -60,44 +71,67 @@ function NavBar() {
             useFlexGap
             flexWrap="wrap"
           >
-            {
-              userStatus ? 
-              (
+            {userStatus ? (
               <Box>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountBoxIcon sx={{fontSize:"2rem"}} />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleLogout}>Log out</MenuItem>
-              </Menu>
-            </Box>
-              
-              ) 
-              
-              : (<Button color="inherit"><Link style={{textDecoration:"none", color:"black"}} href={'/login'}>Login</Link></Button>)
-              }
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AccountBoxIcon sx={{ fontSize: "2rem" }} />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleOpenModal}>Log out</MenuItem>
+                  <Modal
+                    open={open}
+                    onClose={handleCloseModal}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <div className="modal">
+                      <Typography
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                      >
+                        Confirmation Logout
+                      </Typography>
+                      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Are you sure do you want to logout?
+                      </Typography>
+                      <Button variant="contained" onClick={handleLogout}>YES</Button>
+                    </div>
+                  </Modal>
+                </Menu>
+              </Box>
+            ) : (
+              <Button color="inherit">
+                <Link
+                  style={{ textDecoration: "none", color: "black" }}
+                  href={"/login"}
+                >
+                  Login
+                </Link>
+              </Button>
+            )}
             <Cart />
           </Stack>
         </Toolbar>
