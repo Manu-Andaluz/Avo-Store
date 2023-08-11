@@ -46,7 +46,7 @@ export default function SignUp() {
 
   useEffect(() => {
 
-    if(userStatus === "completed"){
+    if(userStatus === "isUser"){
       push('/')
     }
 

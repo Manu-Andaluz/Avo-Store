@@ -54,6 +54,7 @@ export const registerController = async (req: Request, res: Response) => {
       `,
       async (error: UserError, response: UserResponse) => {
         if (error) {
+          console.log(res);
           return res
             .status(404)
             .send({ error: error, errorMessage: error.detail });
