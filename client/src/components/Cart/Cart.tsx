@@ -47,7 +47,7 @@ const Cart = () => {
                         flexWrap: 'wrap', color: "black", padding: "2rem 10px", width:"100vh"
                     }}>
                         <h4 style={{ fontSize: "1.5rem" }}>
-                            Tu carrito
+                            Shopping cart
                         </h4>
                         <Button onClick={() => setSideBar(false)}><CloseIcon /></Button>
                     </div>
@@ -62,13 +62,13 @@ const Cart = () => {
                     }
                     <Grid container direction="column" spacing={0} gap={2} style={{margin: "2rem 0",textAlign:"center"}}>
                     <Typography style={{width:"50%",margin:" auto",fontSize:"1.2rem"}}>Total: ${cart.cartAmount}.00 USD</Typography>
-                    <Button style={{color:"red", width:"50%",margin:" auto"}} onClick={() => dispatch(emptyCart())}>Limpiar Carrito</Button>
-                    <Button variant='contained' style={{width:"50%", margin:"auto"}}>Continuar con la Compra</Button>
+                    <Button style={{color:"red", width:"50%",margin:" auto"}} onClick={() => dispatch(emptyCart())}>Clear cart</Button>
+                    <Button variant='contained' style={{width:"50%", margin:"auto"}}>Checkout</Button>
                     </Grid>
                 </Grid>
                 ) : ( 
                     <Box sx={{display:"flex",alignItems:"center"}}>
-                        <Typography variant='h4' style={{fontSize:"1.5rem",margin:"2rem 1rem"}}>Carrito vacío </Typography><ProductionQuantityLimitsIcon sx={{fontSize:"1.5rem"}}/>
+                        <Typography variant='h4' style={{fontSize:"1.5rem",margin:"2rem 1rem"}}>Empty cart </Typography><ProductionQuantityLimitsIcon sx={{fontSize:"1.5rem"}}/>
                     </Box>
                 )}
                 </DrawerContainer>

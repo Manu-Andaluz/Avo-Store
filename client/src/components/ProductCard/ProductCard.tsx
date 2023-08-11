@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TProduct } from "@/redux/features/productsSlice";
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -12,12 +12,18 @@ import Image from 'next/image'
 import { useAppDispatch } from '@/redux/hooks';
 import { addToCart } from '@/redux/features/cartSlice';
 import Link from 'next/link'
+import { Alert } from '@mui/material';
 
 function ProductCard({id,name,price,image_url,description,quantity}: TProduct) {
+  const [toCart, setToCart] = useState(false)
   const dispatch = useAppDispatch() 
 
   const handleClick = () => {
     dispatch(addToCart({id,name,price,image_url,quantity}))
+    setToCart(true)
+    setTimeout(() => {
+      setToCart(false)
+    },3000)
   }
 
   return (
@@ -43,7 +49,8 @@ function ProductCard({id,name,price,image_url,description,quantity}: TProduct) {
       </CardContent>
       <CardActions style={{display:"flex", justifyContent:"center"}}>
         <Typography variant="h6">$ {price}.00</Typography>
-        <Button size="large" onClick={handleClick} style={{position:"inherit"}}><AddShoppingCartIcon /></Button>
+        
+      { toCart ? <Alert severity="success">Added to cart</Alert> : <Button size="large" onClick={handleClick} style={{position:"inherit"}}><AddShoppingCartIcon /></Button>}
       </CardActions>
     </Card>
     </Grid>
