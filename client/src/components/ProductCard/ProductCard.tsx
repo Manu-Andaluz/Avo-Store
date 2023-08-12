@@ -48,7 +48,7 @@ function ProductCard({id,name,price,image_url,description,quantity}: TProduct) {
         </Typography>
       </CardContent>
       <CardActions style={{display:"flex", justifyContent:"center"}}>
-        <Typography variant="h6"> {price}</Typography>
+        <Typography variant="h6"> ${price}</Typography>
         
       { toCart ? <Alert severity="success">Added to cart</Alert> : <Button size="large" onClick={handleClick} style={{position:"inherit"}}><AddShoppingCartIcon /></Button>}
       </CardActions>

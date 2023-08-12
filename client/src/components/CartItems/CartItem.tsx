@@ -48,7 +48,7 @@ export default function CartItem({id,name,image_url,price,quantity}: CartProduct
         <Typography component="h5" variant='h4' style={{fontSize:"1.2rem"}}>{name}</Typography>
       </CardContent>
       <CardActions style={{display:"grid", maxWidth:"100%", margin:"0 auto"}}>
-        <Typography style={{fontSize:"15px"}}>Price: {price}</Typography>
+        <Typography style={{fontSize:"15px"}}>Price: ${price}</Typography>
 
         <Box style={{display:"flex", alignItems:"center"}}>
         <Typography style={{fontSize:"15px"}}>Quantity: </Typography>

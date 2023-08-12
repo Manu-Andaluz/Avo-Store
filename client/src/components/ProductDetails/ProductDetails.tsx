@@ -35,7 +35,7 @@ export default function ProductDetails({id,name,image_url,price,description,quan
           <Typography component="div" variant="h5">
             {name}
           </Typography>
-          <Typography>${price}.99</Typography>
+          <Typography>${price}</Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
             {description}
           </Typography>

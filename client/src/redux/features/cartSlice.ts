@@ -34,11 +34,11 @@ const cartSlice = createSlice({
 
       if (item) {
         item.quantity++;
-        state.cartAmount += item.price;
+        state.cartAmount += Number(item.price);
       } else {
         state.cartItems.push({ ...action.payload, quantity: 1 });
         state.cartQuantity++;
-        state.cartAmount += action.payload.price;
+        state.cartAmount += Number(action.payload.price);
       }
 
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
@@ -70,8 +70,9 @@ const cartSlice = createSlice({
           (item: TProductCart) => item.price * item.quantity
         );
         const total = totalItems.reduce(
-          (a: number, b: number) => 0 + a + (0 + b)
+          (a: number | string, b: number | string) => Number(a) + Number(b)
         );
+        console.log(total);
         return {
           ...state,
           cartAmount: total,
