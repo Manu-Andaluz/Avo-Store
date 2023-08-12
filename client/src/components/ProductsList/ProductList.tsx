@@ -11,8 +11,8 @@ function ProductList() {
 
   return (
   <Box sx={{ flexGrow: 1 }} style={{margin: "20vh 4rem"}}>
-    <Box sx={{display:"grid", placeContent:"center", margin:"10vh 0"}}>
-    <h1 style={{fontWeight:"500"}}>Welcome to Avo <ConsoleIcon style={{margin:"0 5px"}} size="45"/> Store</h1>
+    <Box sx={{display:{xs:"none",md:"grid"}, placeContent:"center", margin:"10vh 0"}}>
+    <Typography variant="h1" sx={{ fontSize:"1.6rem"}} style={{fontWeight:"500"}}>Welcome to Avo <ConsoleIcon style={{margin:"0 10px",}} size="45"/> Store</Typography>
     </Box>
     <Grid container spacing={8} justifyContent="center" alignItems="center">
     {products && products.map((product) => {
