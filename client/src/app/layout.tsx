@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google'
+import { Inter } from "next/font/google";
 import { Providers } from "@/redux/provider";
 
 export default function RootLayout({
@@ -8,8 +8,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>Avo Store</title>
+      </head>
       <body>
-          <Providers>{children}</Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

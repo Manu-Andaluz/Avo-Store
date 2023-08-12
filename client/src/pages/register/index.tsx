@@ -8,7 +8,6 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -17,6 +16,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { registerUser } from '@/redux/features/userSlice';
 import { useRouter } from 'next/navigation';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import ConsoleIcon from '@/components/SVGIcons/console';
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
@@ -65,8 +65,8 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1, bgcolor: 'primary.dark' }}>
+            <ConsoleIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up

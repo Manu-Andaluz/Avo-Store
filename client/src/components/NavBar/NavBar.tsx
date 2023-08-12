@@ -5,7 +5,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import Avocado from "../SVGIcons/avocado";
 import Stack from "@mui/material/Stack";
 import Cart from "../Cart/Cart";
 import Link from "next/link";
@@ -16,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logOutUser } from "@/redux/features/userSlice";
 import { useRouter } from "next/navigation";
 import { Modal } from "@mui/material";
+import ConsoleIcon from "../SVGIcons/console";
 
 function NavBar() {
   const dispatch = useAppDispatch();
@@ -59,14 +59,15 @@ function NavBar() {
           >
             <Link href={"/"}>
               {" "}
-              <Avocado />
+              <ConsoleIcon />
             </Link>
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Avo Store
           </Typography>
           <Stack
-            spacing={{ xs: 1, sm: 2 }}
+            spacing={{ xs: 1, sm: 3 }}
+            sx={{alignItems:"center"}}
             direction="row"
             useFlexGap
             flexWrap="wrap"
@@ -123,14 +124,12 @@ function NavBar() {
                 </Menu>
               </Box>
             ) : (
-              <Button color="inherit">
                 <Link
                   style={{ textDecoration: "none", color: "black" }}
                   href={"/login"}
                 >
                   Login
                 </Link>
-              </Button>
             )}
             <Cart />
           </Stack>
