@@ -47,9 +47,15 @@ function NavBar() {
       <AppBar
         position="fixed"
         className="navbar"
-        style={{ padding: "3px 0", backgroundColor: "white", color: "black" }}
+        style={{ width:"100%",padding: "3px 0", backgroundColor: "white", color: "black" }}
       >
-        <Toolbar>
+        <Toolbar sx={{
+            display:"flex",
+            flexDirection: "row",
+            justifyContent: "space-evenly"
+          }}>
+
+          <Box sx={{display:"flex", alignItems:"center"}}> 
           <IconButton
             size="large"
             edge="start"
@@ -65,6 +71,8 @@ function NavBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Avo Store
           </Typography>
+          </Box>
+
           <Stack
             spacing={{ xs: 1, sm: 3 }}
             sx={{alignItems:"center"}}

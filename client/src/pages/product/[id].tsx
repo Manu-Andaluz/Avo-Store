@@ -5,7 +5,6 @@ import axios from "axios";
 import { TProduct } from "@/redux/features/productsSlice";
 import ProductDetails from "@/components/ProductDetails/ProductDetails";
 import "../../app/globals.css"
-import HomePage from '../../app/page'
 import NavBar from "@/components/NavBar/NavBar";
 
 export default function Page({params} : {params: {id: string}}) {
@@ -35,7 +34,7 @@ export default function Page({params} : {params: {id: string}}) {
    <div style={{marginTop:"20vh"}}>
      {product[0] ? (
      <ProductDetails id={product[0].id} stock={product[0].stock} name={product[0].name} price={product[0].price} image_url={product[0].image_url} description={product[0].description} quantity={product[0].quantity}/>
-     ) : (<p>No product find</p>)}
+     ) : (<p style={{display:"grid", placeContent:"center"}}>Loading ... </p>)}
    </div>
    </>
   )
