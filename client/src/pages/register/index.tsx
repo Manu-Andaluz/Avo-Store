@@ -65,7 +65,7 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'primary.dark' }}>
+          <Avatar sx={{ m: 1, bgcolor: '#ffcb4f' }}>
             <ConsoleIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
