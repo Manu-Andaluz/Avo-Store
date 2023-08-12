@@ -62,7 +62,7 @@ const Cart = () => {
                         })
                     }
                     <Grid container direction="column" spacing={0} gap={2} style={{margin: "2rem 0",textAlign:"center"}}>
-                    <Typography style={{width:"50%",margin:" auto",fontSize:"1.2rem"}}>Total: ${cart.cartAmount}.00 USD</Typography>
+                    <Typography style={{width:"50%",margin:" auto",fontSize:"1.2rem"}}>Total: {cart.cartAmount} USD</Typography>
                     <Button style={{color:"red", width:"50%",margin:" auto"}} onClick={() => dispatch(emptyCart())}>Clear cart</Button>
                     <Button variant='contained' style={{width:"50%", margin:"auto"}}>Checkout</Button>
                     </Grid>
