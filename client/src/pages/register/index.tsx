@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { registerUser } from '@/redux/features/userSlice';
 import { useRouter } from 'next/navigation';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import ConsoleIcon from '@/components/SVGIcons/console';
+import ConsoleIcon from '@/components/SVGIcons/AvoIcon';
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
@@ -65,7 +65,7 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: '#ffcb4f' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.dark' }}>
             <ConsoleIcon />
           </Avatar>
           <Typography component="h1" variant="h5">

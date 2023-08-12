@@ -11,7 +11,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import CartItem from '../CartItems/CartItem';
 import Grid from '@mui/material/Grid';
-import { emptyCart } from '@/redux/features/cartSlice';
+import { emptyCart, getTotal } from '@/redux/features/cartSlice';
 import { TProduct } from '@/redux/features/productsSlice';
 import '../../app/globals.css'
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
@@ -36,6 +36,7 @@ const Cart = () => {
 
     useEffect(() => {
         setMounted(true);
+        dispatch(getTotal())
     },[])
 
     if(mounted){
@@ -46,9 +47,9 @@ const Cart = () => {
                         display: "flex", alignItems: 'center', gap: "1rem", justifyContent: "space-between",
                         flexWrap: 'wrap', color: "black", padding: "2rem 10px", width:"100vh"
                     }}>
-                        <h4 style={{ fontSize: "1.5rem" }}>
+                        <Typography component="h4" variant='h5' style={{ fontSize: "1.5rem" }}>
                             Shopping cart
-                        </h4>
+                        </Typography>
                         <Button onClick={() => setSideBar(false)}><CloseIcon /></Button>
                     </div>
                    {cart.cartItems.length > 0 ?  (

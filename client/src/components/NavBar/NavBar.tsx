@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logOutUser } from "@/redux/features/userSlice";
 import { useRouter } from "next/navigation";
 import { Modal } from "@mui/material";
-import ConsoleIcon from "../SVGIcons/console";
+import ConsoleIcon from "../SVGIcons/AvoIcon";
 
 function NavBar() {
   const dispatch = useAppDispatch();
@@ -47,7 +47,7 @@ function NavBar() {
       <AppBar
         position="fixed"
         className="navbar"
-        style={{ padding: "10px 0", backgroundColor: "white", color: "black" }}
+        style={{ padding: "3px 0", backgroundColor: "white", color: "black" }}
       >
         <Toolbar>
           <IconButton
