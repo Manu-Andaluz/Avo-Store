@@ -45,7 +45,7 @@ const Cart = () => {
                 <DrawerContainer variant="permanent" component={Drawer} anchor="right" style={{ position: "fixed", opacity: !sideBar ? "0" : "1", transition: "all ease-in-out .2s", visibility: !sideBar ? "hidden" : "visible" }}>
                     <div style={{
                         display: "flex", alignItems: 'center', gap: "1rem", justifyContent: "space-between",
-                        flexWrap: 'wrap', color: "black", padding: "2rem 10px", width:"100vh"
+                        flexWrap: 'wrap', color: "black", padding: "2rem 10px", width:"100%"
                     }}>
                         <Typography component="h4" variant='h5' style={{ fontSize: "1.5rem" }}>
                             Shopping cart
@@ -53,7 +53,7 @@ const Cart = () => {
                         <Button onClick={() => setSideBar(false)}><CloseIcon /></Button>
                     </div>
                    {cart.cartItems.length > 0 ?  (
-                    <Grid container direction="column" spacing={2}>
+                    <Grid container direction="column" spacing={2} sx={{padding:"0 10px", width:{md:"100%",lg:"120vh"}}}>
                     {
                         cart.cartItems && cart.cartItems.map((item : TProduct) => {
                             return(

@@ -52,7 +52,7 @@ function NavBar() {
         <Toolbar sx={{
             display:"flex",
             flexDirection: "row",
-            justifyContent: "space-evenly"
+            justifyContent: {xs:"space-around",md:"space-evenly"}
           }}>
 
           <Box sx={{display:"flex", alignItems:"center"}}> 
@@ -68,7 +68,7 @@ function NavBar() {
               <ConsoleIcon />
             </Link>
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 , fontSize:{xs:"15px", md:"1.3rem"}}}>
             Avo Store
           </Typography>
           </Box>
@@ -133,10 +133,10 @@ function NavBar() {
               </Box>
             ) : (
                 <Link
-                  style={{ textDecoration: "none", color: "black" }}
+                  style={{ textDecoration: "none", color: "black", }}
                   href={"/login"}
                 >
-                  Login
+                  <Typography sx={{fontSize:{xs:"15px", md:"1.1rem"}}}>Login</Typography>
                 </Link>
             )}
             <Cart />

@@ -36,8 +36,8 @@ export default function CartItem({id,name,image_url,price,quantity}: CartProduct
   React.useEffect(() => {
   }, [dispatch,cart])
   return (
-    <Grid item>
-    <Card style={{display: "flex", width: "90%", height: "auto", alignItems: "center", justifyContent:"space-between", margin: "0 auto"}} variant='outlined' key={id}>
+    <Grid item sx={{display: {xs:"grid",sm:"flex"},justifyContent:"space-between", placeContent:"start",minWidth:"100%"}}>
+    <Card sx={{display: {xs:"grid",sm:"flex"}, width: "100%", alignItems: "center", justifyContent:"space-between"}} variant='outlined' key={id}>
       <CardMedia
       style={{width:"100px"}}
         component="img"
@@ -45,7 +45,7 @@ export default function CartItem({id,name,image_url,price,quantity}: CartProduct
         image={image_url}
       />
       <CardContent>
-        <Typography component="h5" variant='h4' style={{fontSize:"1.2rem"}}>{name}</Typography>
+        <Typography component="h5" variant='h4' sx={{fontSize:{xs:"0.8rem",sm:"1rem"}}}>{name}</Typography>
       </CardContent>
       <CardActions style={{display:"grid", maxWidth:"100%", margin:"0 auto"}}>
         <Typography style={{fontSize:"15px"}}>Price: ${price}</Typography>
