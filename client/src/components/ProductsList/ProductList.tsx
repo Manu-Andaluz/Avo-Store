@@ -1,13 +1,21 @@
-import { useAppSelector } from "@/redux/hooks";
-import React from "react";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import React, { useEffect } from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from "@mui/material/Typography";
 import ConsoleIcon from "../SVGIcons/AvoIcon";
+import { fetchProducts } from "@/redux/features/productsSlice";
+import { loadUser } from "@/redux/features/userSlice";
 
 function ProductList() {
   const products = useAppSelector((state) => state.productReducer.data)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchProducts())
+    dispatch(loadUser())
+  },[])
 
   return (
   <Box sx={{ flexGrow: 1 }} style={{margin: "20vh 4rem"}}>

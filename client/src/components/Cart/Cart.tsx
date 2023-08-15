@@ -13,7 +13,6 @@ import CartItem from '../CartItems/CartItem';
 import Grid from '@mui/material/Grid';
 import { emptyCart, getTotal } from '@/redux/features/cartSlice';
 import { TProduct } from '@/redux/features/productsSlice';
-import '../../app/globals.css'
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 
 const drawerWidth = 240;
@@ -53,7 +52,7 @@ const Cart = () => {
                         <Button onClick={() => setSideBar(false)}><CloseIcon /></Button>
                     </div>
                    {cart.cartItems.length > 0 ?  (
-                    <Grid container direction="column" spacing={2} sx={{padding:"0 10px", width:{md:"100%",lg:"120vh"}}}>
+                    <Grid container direction="column" spacing={2} sx={{padding:"0 10px", width:{xs: "100%",md:"100%",lg:"100vh"}}}>
                     {
                         cart.cartItems && cart.cartItems.map((item : TProduct) => {
                             return(

@@ -28,22 +28,22 @@ function ProductCard({id,name,price,image_url,description,quantity}: TProduct) {
 
   return (
     <Grid item style={{textAlign:"center"}}>
-    <Card sx={{ minWidth:250 }} variant='outlined'>
+    <Card sx={{ width:300 }} variant='outlined'>
       <Link href={`/product/${id}`}>
       <CardMedia
         title={name}
         style={{paddingTop:"1rem"}}
       >
         <Image
-        width={200}
-        height={250}
+        width={150}
+        height={200}
         src={image_url}
         alt={name}
     />
       </CardMedia>
       </Link>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div" sx={{fontSize:"1.2rem"}}>
           {name}
         </Typography>
       </CardContent>

@@ -1,6 +1,6 @@
 import { Providers } from '@/redux/provider'
 import App, { AppContext, AppInitialProps, AppProps } from 'next/app'
- 
+import './pages.css'
 type AppOwnProps = { example: string }
  
 export default function MyApp({

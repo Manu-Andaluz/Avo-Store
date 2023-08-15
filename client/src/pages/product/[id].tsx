@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { TProduct } from "@/redux/features/productsSlice";
 import ProductDetails from "@/components/ProductDetails/ProductDetails";
-import "../../app/globals.css"
 import NavBar from "@/components/NavBar/NavBar";
 
 export default function Page({params} : {params: {id: string}}) {
