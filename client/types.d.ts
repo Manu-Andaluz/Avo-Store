@@ -64,7 +64,7 @@ export type TProduct = {
   id: string | number;
   name: string;
   price: number;
-  image: Url;
+  image_url: Url;
   desciption: string;
   stock: number;
   quantity: number;

@@ -3,6 +3,7 @@ import { productRouter } from "./routes/products";
 import { db } from "./database/index";
 import morgan from "morgan";
 import { userRouter } from "./routes/user";
+import { orderRouter } from "./routes/order";
 
 const PORT = process.env.PORT || 5000;
 
@@ -23,6 +24,7 @@ server.use((req, res, next) => {
 
 server.use("/product", productRouter);
 server.use("/auth", userRouter);
+server.use("/order", orderRouter);
 
 db.sequelize.sync({ alter: true }).then(() => {
   server.listen(PORT, () => {

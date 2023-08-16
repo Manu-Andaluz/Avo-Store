@@ -14,6 +14,7 @@ import Grid from '@mui/material/Grid';
 import { emptyCart, getTotal } from '@/redux/features/cartSlice';
 import { TProduct } from '@/redux/features/productsSlice';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import axios from 'axios';
 
 const drawerWidth = 240;
 
@@ -37,6 +38,14 @@ const Cart = () => {
         setMounted(true);
         dispatch(getTotal())
     },[])
+
+    const handleCheckout = () => {
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL}/order/checkout`,cart.cartItems).then(res => {
+            if(res){
+                window.location.href = res.data.checkoutUrl
+            }
+        })
+    }
 
     if(mounted){
         return (
@@ -63,7 +72,7 @@ const Cart = () => {
                     <Grid container direction="column" spacing={0} gap={2} style={{margin: "2rem 0",textAlign:"center"}}>
                     <Typography style={{width:"50%",margin:" auto",fontSize:"1.2rem"}}>Total: ${cart.cartAmount.toFixed(2)} USD</Typography>
                     <Button style={{color:"red", width:"50%",margin:" auto"}} onClick={() => dispatch(emptyCart())}>Clear cart</Button>
-                    <Button variant='contained' style={{width:"50%", margin:"auto"}}>Checkout</Button>
+                    <Button variant='contained' style={{width:"50%", margin:"auto"}} onClick={handleCheckout}>Checkout</Button>
                     </Grid>
                 </Grid>
                 ) : ( 

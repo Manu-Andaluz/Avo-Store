@@ -42,7 +42,7 @@ export type TProduct = {
   id: string | number;
   name: string;
   price: number;
-  image: Url;
+  image_url: Url;
   desciption: string;
   stock: number;
   quantity: number;
@@ -58,4 +58,20 @@ export type ProductResponse = {
   _types: {};
   RowCtor: null;
   rowAsArray: boolean;
+};
+
+// order
+
+export type Cart = TProduct[];
+
+export type CheckoutProducts = {
+  price_data: {
+    currency: string;
+    product_data: {
+      name: string;
+      images: [string];
+    };
+    unit_amount: number;
+  };
+  quantity: number;
 };
