@@ -15,11 +15,11 @@ productRouter.get("/allProducts", async (req: Request, res: Response) => {
         results.rows.map((data) => {
           data.id = `${data.id}`;
         });
-        res.send(results.rows);
+        return res.send(results.rows);
       }
     );
   } catch (error) {
-    res.status(404).send(error);
+    return res.status(404).send(error);
   }
 });
 
@@ -32,11 +32,11 @@ productRouter.get("/productById/:id", async (req: Request, res: Response) => {
         if (error || !results.rows[0]) {
           return [];
         }
-        res.status(200).send(results.rows[0]);
+        return res.status(200).send(results.rows[0]);
       }
     );
   } catch (error) {
     console.log(error);
-    res.status(404).send(error);
+    return res.status(404).send(error);
   }
 });

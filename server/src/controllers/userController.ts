@@ -15,18 +15,19 @@ export const loginController = async (req: Request, res: Response) => {
     pool.query(
       `SELECT * FROM users WHERE email = '${email}' `,
       async (error: UserError, response: UserResponse) => {
-        if (error) {
-          return error;
-        }
-        const validatePassword = await bcrypt.compare(
-          password,
-          response.rows[0].password
-        );
-        if (validatePassword) {
-          const token = await generatheAuthToken(response.rows[0]);
-          res.status(200).send(token);
-        } else {
-          throw Error("Incorrect user or password");
+        try {
+          const validatePassword = await bcrypt.compare(
+            password,
+            response.rows[0].password
+          );
+          if (validatePassword) {
+            const token = await generatheAuthToken(response.rows[0]);
+            return res.status(200).send(token);
+          } 
+          throw new Error('Incorrect Password or User')
+
+        } catch (error) {
+          return res.status(404).json(error)
         }
       }
     );
