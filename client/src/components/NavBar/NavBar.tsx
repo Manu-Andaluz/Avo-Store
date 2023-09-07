@@ -47,35 +47,45 @@ function NavBar() {
       <AppBar
         position="fixed"
         className="navbar"
-        style={{ width:"100%",padding: "3px 0", backgroundColor: "white", color: "black" }}
+        style={{
+          width: "100%",
+          padding: "3px 0",
+          backgroundColor: "white",
+          color: "black",
+        }}
       >
-        <Toolbar sx={{
-            display:"flex",
+        <Toolbar
+          sx={{
+            display: "flex",
             flexDirection: "row",
-            justifyContent: {xs:"space-around",md:"space-evenly"}
-          }}>
-
-          <Box sx={{display:"flex", alignItems:"center"}}> 
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 1 }}
-          >
-            <Link href={"/"}>
-              {" "}
-              <ConsoleIcon />
-            </Link>
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 , fontSize:{xs:"15px", md:"1.3rem"}}}>
-            Avo Store
-          </Typography>
+            justifyContent: { xs: "space-around", md: "space-evenly" },
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 1 }}
+            >
+              <Link href={"/"}>
+                {" "}
+                <ConsoleIcon />
+              </Link>
+            </IconButton>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, fontSize: { xs: "15px", md: "1.3rem" } }}
+            >
+              Avo Store
+            </Typography>
           </Box>
 
           <Stack
             spacing={{ xs: 1, sm: 3 }}
-            sx={{alignItems:"center"}}
+            sx={{ alignItems: "center" }}
             direction="row"
             useFlexGap
             flexWrap="wrap"
@@ -126,18 +136,22 @@ function NavBar() {
                       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                         Are you sure do you want to logout?
                       </Typography>
-                      <Button variant="contained" onClick={handleLogout}>YES</Button>
+                      <Button variant="contained" onClick={handleLogout}>
+                        YES
+                      </Button>
                     </div>
                   </Modal>
                 </Menu>
               </Box>
             ) : (
-                <Link
-                  style={{ textDecoration: "none", color: "black", }}
-                  href={"/login"}
-                >
-                  <Typography sx={{fontSize:{xs:"15px", md:"1.1rem"}}}>Login</Typography>
-                </Link>
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                href={"/login"}
+              >
+                <Typography sx={{ fontSize: { xs: "15px", md: "1.1rem" } }}>
+                  Login
+                </Typography>
+              </Link>
             )}
             <Cart />
           </Stack>

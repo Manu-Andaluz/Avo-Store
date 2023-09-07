@@ -1,0 +1,24 @@
+.cart {
+  padding: 15px 15px 0 0;
+  position: absolute;
+  right: 100%;
+  top: 0;
+  width: auto;
+  height: 100vh;
+  background-color: white;
+  overflow-x: hidden;
+  z-index: 2;
+  color: black;
+  transition: all 500ms;
+}
+
+.open_navbar {
+  visibility: visible;
+  -webkit-transform: translateX(100vw);
+  transform: translateX(100vw);
+}
+
+.closed_navbar {
+  -webkit-transform: translateX(200vw);
+  transform: translateX(200vw);
+}
